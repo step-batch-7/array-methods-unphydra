@@ -13,5 +13,6 @@ typedef enum
 Status compare_array(Array,Array);
 void show_message(String,Status);
 void show_length_failure(int, int);
+Status compare_value(int,int);
 
 #endif
