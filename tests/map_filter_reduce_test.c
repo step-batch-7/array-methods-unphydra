@@ -89,9 +89,33 @@ void test_filter(void)
   test_filter_with_is_even_predicate();
 }
 
+int test_reducer(int a, int b)
+{
+  return a+b;
+}
+
+void test_reduce_with_zero_length_array(void)
+{
+  Array input;
+  int ar[] = {};
+  input.array = ar;
+  input.length = 0;
+  int actual = reduce(&input,0,test_reducer);
+  int expected = 0; 
+  Status s = compare_value(actual,expected);
+  show_message("  should reduce and return initial value for given empty array",s);
+}
+
+void test_reduce(void)
+{
+  printf("\ntest reduce\n");
+  test_reduce_with_zero_length_array();
+}
+
 int main(void)
 {
   test_map();
   test_filter();
+  test_reduce();
   return 0;
 }
