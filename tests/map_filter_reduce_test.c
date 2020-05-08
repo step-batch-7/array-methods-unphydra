@@ -34,15 +34,42 @@ void test_map_with_zero_length_array(void)
   Status s = compare_array(*actual,expected);
   show_message("  should map and return empty array for given empty array",s);
 }
+
 void test_map(void)
 {
-  printf("test map\n");
+  printf("\ntest map\n");
   test_map_with_increment_mapper();
   test_map_with_zero_length_array();
+}
+
+Bool test_predicate(int a){
+  return True;
+}
+
+void test_filter_with_zero_length_array(void)
+{
+  Array input;
+  int ar[] = {};
+  input.array = ar;
+  input.length = 0;
+  Array_ptr actual = filter(&input,test_predicate);
+  Array expected;
+  int exp_ar[] ={};
+  expected.array = exp_ar;
+  expected.length = 0;
+  Status s = compare_array(*actual,expected);
+  show_message("  should filter and return empty array for given empty array",s);
+}
+
+void test_filter(void)
+{
+  printf("\ntest map\n");
+  test_filter_with_zero_length_array();
 }
 
 int main(void)
 {
   test_map();
+  test_filter();
   return 0;
 }
