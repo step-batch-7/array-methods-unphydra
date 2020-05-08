@@ -2,7 +2,6 @@
 
 void show_message(String msg, Status s)
 {
-  s?pass++:fail++;
   printf("%s => %s\n",msg,s?"pass":"fails");
 }
 

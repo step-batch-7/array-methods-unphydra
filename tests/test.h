@@ -10,9 +10,6 @@ typedef enum
   Success
 } Status;
 
-int pass = 0;
-int fail = 0;
-
 Status compare_array(Array,Array);
 void show_message(String,Status);
 void show_length_failure(int, int);
