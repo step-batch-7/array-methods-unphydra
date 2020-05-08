@@ -106,10 +106,23 @@ void test_reduce_with_zero_length_array(void)
   show_message("  should reduce and return initial value for given empty array",s);
 }
 
+void test_reduce_with_summation_of_number_reducer(void)
+{
+  Array input;
+  int ar[] = {1,2,3,4,5};
+  input.array = ar;
+  input.length = 5;
+  int actual = reduce(&input,0,test_reducer);
+  int expected = 15; 
+  Status s = compare_value(actual,expected);
+  show_message("  should reduce and return total of given numbers in array",s);
+}
+
 void test_reduce(void)
 {
   printf("\ntest reduce\n");
   test_reduce_with_zero_length_array();
+  test_reduce_with_summation_of_number_reducer();
 }
 
 int main(void)
