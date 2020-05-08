@@ -61,10 +61,32 @@ void test_filter_with_zero_length_array(void)
   show_message("  should filter and return empty array for given empty array",s);
 }
 
+Bool is_even(int a)
+{
+  return a%2==0;
+}
+
+void test_filter_with_is_even_predicate(void)
+{
+  Array input;
+  int ar[] = {1,2,3,4};
+  input.array = ar;
+  input.length = 4;
+  Array_ptr actual = filter(&input,is_even);
+  Array expected;
+  int exp_ar[] ={2,4};
+  expected.array = exp_ar;
+  expected.length = 2;
+  Status s = compare_array(*actual,expected);
+  show_message("  should filter and return even array for given numbers array",s);
+}
+
+
 void test_filter(void)
 {
   printf("\ntest map\n");
   test_filter_with_zero_length_array();
+  test_filter_with_is_even_predicate();
 }
 
 int main(void)
