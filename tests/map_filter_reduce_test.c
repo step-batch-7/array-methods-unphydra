@@ -214,10 +214,49 @@ void test_filter_void_with_zero_length_ArrayVoid(void)
   show_message("  should give ArrayVoid of zero length if given ArrayVoid of zero length",s);
 }
 
+void test_filter_void_with_integer_array(void)
+{
+  int ar[] = {3,2,5};
+  Object ar_ptr[] = {&ar[0],&ar[1],&ar[2]};
+  ArrayVoid input;
+  input.array = ar_ptr;
+  input.length = 3;
+  ArrayVoid_ptr actual = filter_void(&input,test_void_filter);
+  int exp_ar[] = {3,5};
+  Object exp_ar_ptr[] = {&exp_ar[0],&exp_ar[1]};
+  ArrayVoid expected;
+  expected.array = exp_ar_ptr;
+  expected.length = 2;
+  Status s = compare_void_array(*actual,expected,integers_validator);
+  show_message("  should give ArrayVoid of integers array with filtered if given ArrayVoid of integers",s);
+}
+
+Bool test_void_filter_char(Object a)
+{
+  return *(char*)a > 96;
+}
+
+void test_filter_void_with_charater_array(void)
+{
+  char ar[] = {'a','B','c'};
+  Object ar_ptr[] = {&ar[0],&ar[1],&ar[2]};
+  ArrayVoid input;
+  input.array = ar_ptr;
+  input.length = 3;
+  ArrayVoid_ptr actual = filter_void(&input,test_void_filter_char);
+  ar[0] = 'a';
+  ar[1] = 'c';
+  input.length = 2;
+  Status s = compare_void_array(*actual,input,char_validator);
+  show_message("  should give ArrayVoid of characters array with filtered with lowercase if given ArrayVoid of characters",s);
+}
+
 void test_filter_void(void)
 {
   printf("\ntest filter void\n");
   test_filter_void_with_zero_length_ArrayVoid();
+  test_filter_void_with_integer_array();
+  test_filter_void_with_charater_array();
 }
 
 int main(void)
