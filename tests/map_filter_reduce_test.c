@@ -198,11 +198,34 @@ void test_map_void(void)
   test_map_void_with_charater_array();
 }
 
+Bool test_void_filter(Object a)
+{
+  return *(int*)a >2;
+}
+
+void test_filter_void_with_zero_length_ArrayVoid(void)
+{
+  Object_ptr ar;
+  ArrayVoid input;
+  input.array = ar;
+  input.length = 0;
+  ArrayVoid_ptr actual = filter_void(&input,test_void_filter);
+  Status s = compare_value(actual->length,0);
+  show_message("  should give ArrayVoid of zero length if given ArrayVoid of zero length",s);
+}
+
+void test_filter_void(void)
+{
+  printf("\ntest filter void\n");
+  test_filter_void_with_zero_length_ArrayVoid();
+}
+
 int main(void)
 {
   test_map();
   test_filter();
   test_reduce();
   test_map_void();
+  test_filter_void();
   return 0;
 }

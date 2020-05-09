@@ -11,3 +11,19 @@ ArrayVoid_ptr map_void(ArrayVoid_ptr src, MapperVoid mapper)
   }
   return result;
 }
+
+ArrayVoid_ptr filter_void(ArrayVoid_ptr src, PredicateVoid predicate)
+{
+  ArrayVoid_ptr result = malloc(sizeof(ArrayVoid));
+  result->array = malloc(sizeof(Object)*src->length);
+  int count = 0;
+  for (int i = 0; i < src->length; i++)
+  {
+    if ((*predicate)(src->array[i]))
+    {
+    result->array[count++] = src->array[i];
+    }
+  }
+  result->length = count;
+  return result;
+}
