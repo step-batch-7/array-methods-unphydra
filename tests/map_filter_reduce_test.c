@@ -259,6 +259,31 @@ void test_filter_void(void)
   test_filter_void_with_charater_array();
 }
 
+Object test_void_reducer(Object a, Object b)
+{
+  int * r = malloc(sizeof(int));
+  *r = *(int*)a + *(int*)b;
+  return r;
+}
+
+void test_reduce_void_with_zero_length_ArrayVoid(void)
+{
+  Object_ptr ar;
+  ArrayVoid input;
+  input.array = ar;
+  input.length = 0;
+  int result = 0;
+  Object actual = reduce_void(&input,&result,test_void_reducer);
+  Status s = compare_value(*(int*)actual,0);
+  show_message("  should give object of zero if given ArrayVoid of zero length and initial value is zero",s);
+}
+
+void test_reduce_void(void)
+{
+  printf("\ntest reduce void\n");
+  test_reduce_void_with_zero_length_ArrayVoid();
+}
+
 int main(void)
 {
   test_map();
@@ -266,5 +291,6 @@ int main(void)
   test_reduce();
   test_map_void();
   test_filter_void();
+  test_reduce_void();
   return 0;
 }
