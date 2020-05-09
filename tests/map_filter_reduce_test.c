@@ -163,11 +163,39 @@ void test_map_void_with_integer_array(void)
   show_message("  should give ArrayVoid of integers array with maped if given ArrayVoid of integers",s);
 }
 
+Object test_void_mapper_char(Object a)
+{
+  char * r = malloc(sizeof(char));
+  *r = *(char*)a - 32;
+  return r;
+}
+
+Status char_validator(Object a,Object b)
+{
+  return *(char*)a == *(char*)b;
+}
+
+void test_map_void_with_charater_array(void)
+{
+  char ar[] = {'a','b','c'};
+  Object ar_ptr[] = {&ar[0],&ar[1],&ar[2]};
+  ArrayVoid input;
+  input.array = ar_ptr;
+  input.length = 3;
+  ArrayVoid_ptr actual = map_void(&input,test_void_mapper_char);
+  ar[0] = 'A';
+  ar[1] = 'B';
+  ar[2] = 'C';
+  Status s = compare_void_array(*actual,input,char_validator);
+  show_message("  should give ArrayVoid of characters array with maped if given ArrayVoid of characters",s);
+}
+
 void test_map_void(void)
 {
   printf("\ntest map void\n");
   test_map_void_with_zero_length_ArrayVoid();
   test_map_void_with_integer_array();
+  test_map_void_with_charater_array();
 }
 
 int main(void)
