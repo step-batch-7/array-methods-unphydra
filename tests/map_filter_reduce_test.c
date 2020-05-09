@@ -125,10 +125,56 @@ void test_reduce(void)
   test_reduce_with_summation_of_number_reducer();
 }
 
+Object test_void_mapper(Object a)
+{
+  int * r = malloc(sizeof(int));
+  *r = *(int*)a + 1;
+  return r;
+}
+
+void test_map_void_with_zero_length_ArrayVoid(void)
+{
+  Object_ptr ar;
+  ArrayVoid input;
+  input.array = ar;
+  input.length = 0;
+  ArrayVoid_ptr actual = map_void(&input,test_void_mapper);
+  Status s = compare_value(actual->length,0);
+  show_message("  should give ArrayVoid of zero length if given ArrayVoid of zero length",s);
+}
+
+Status integers_validator(Object a, Object b)
+{
+  return *(int*)a == *(int*)b;
+}
+
+void test_map_void_with_integer_array(void)
+{
+  int ar[] = {1,2,3};
+  Object ar_ptr[] = {&ar[0],&ar[1],&ar[2]};
+  ArrayVoid input;
+  input.array = ar_ptr;
+  input.length = 3;
+  ArrayVoid_ptr actual = map_void(&input,test_void_mapper);
+  ar[0]++;
+  ar[1]++;
+  ar[2]++;
+  Status s = compare_void_array(*actual,input,integers_validator);
+  show_message("  should give ArrayVoid of integers array with maped if given ArrayVoid of integers",s);
+}
+
+void test_map_void(void)
+{
+  printf("\ntest map void\n");
+  test_map_void_with_zero_length_ArrayVoid();
+  test_map_void_with_integer_array();
+}
+
 int main(void)
 {
   test_map();
   test_filter();
   test_reduce();
+  test_map_void();
   return 0;
 }
