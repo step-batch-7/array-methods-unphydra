@@ -1,11 +1,12 @@
 #! /bin/bash
 
-executable=$1
-
 rm -rf *.o
+for i in "$@"
+do
+  gcc -c $i
+done
 
 gcc -c *.c
-gcc -c $executable
 gcc -o main *.o
 ./main
 rm -rf *.o main
