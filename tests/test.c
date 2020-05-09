@@ -34,3 +34,18 @@ Status compare_value(int a,int e)
   }
   return Success;
 }
+
+Status compare_void_array(ArrayVoid actual,ArrayVoid expected, validator_ptr validator)
+{
+  if (actual.length != expected.length)
+  {
+    show_length_failure(actual.length,expected.length);
+    return Failure;
+  }
+  Status s = Success;
+  for (int i = 0; i < expected.length; i++)
+  {
+    s =s && (*validator)(actual.array[i],expected.array[i]);
+  }
+  return s;
+}
