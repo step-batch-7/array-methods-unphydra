@@ -278,10 +278,24 @@ void test_reduce_void_with_zero_length_ArrayVoid(void)
   show_message("  should give object of zero if given ArrayVoid of zero length and initial value is zero",s);
 }
 
+void  test_reduce_void_with_integers_ArrayVoid_to_get_sum(void)
+{
+  int ar[] = {3,2,5};
+  Object ar_ptr[] = {&ar[0],&ar[1],&ar[2]};
+  ArrayVoid input;
+  input.array = ar_ptr;
+  input.length = 3;
+  int initial_value = 0;
+  Object actual = reduce_void(&input,&initial_value, test_void_reducer);
+  Status s = compare_value(*(int*)actual,10);
+  show_message("  should give object of integer with reduced to sum of integers if given ArrayVoid of integers",s);
+}
+
 void test_reduce_void(void)
 {
   printf("\ntest reduce void\n");
   test_reduce_void_with_zero_length_ArrayVoid();
+  test_reduce_void_with_integers_ArrayVoid_to_get_sum();
 }
 
 int main(void)
