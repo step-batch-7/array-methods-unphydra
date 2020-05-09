@@ -1,7 +1,7 @@
 #ifndef __test_h
 #define __test_h
 
-#include "../array.h"
+#include "../array_void.h"
 
 typedef char * String;
 typedef enum
